@@ -4,9 +4,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 using MailKit.Security;
-using Microsoft.AspNetCore.Html;
 using MimeKit;
-using MimeKit.Text;
 using News_Emailer.Models;
 
 namespace News_Emailer.Services
@@ -24,6 +22,8 @@ namespace News_Emailer.Services
         private static readonly Recipient[] Recipients =
         {
             new Recipient("Freddie Payne", "freddie.payne@ghyston.com"), 
+            new Recipient("Rhianna McGill", "rhianna.mcgill@ghyston.com"), 
+            new Recipient("Ben Wallace-Stock", "benjamin.wallace-stock@ghyston.com"), 
         };
         
         public static async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)

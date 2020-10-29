@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using News_Emailer.Models;
 using News_Emailer.Services;
