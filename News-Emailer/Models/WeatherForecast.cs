@@ -1,6 +1,6 @@
 using System;
 
-namespace News_Emailer
+namespace News_Emailer.Models
 {
     public class WeatherForecast
     {

@@ -5,5 +5,9 @@
         <RootNamespace>News_Emailer</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0-rc.2.20475.5" />
+    </ItemGroup>
+
 
 </Project>
