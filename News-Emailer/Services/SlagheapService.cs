@@ -26,7 +26,7 @@ namespace News_Emailer.Services
             new Recipient("Freddie Payne", "freddie.payne@ghyston.com"), 
         };
         
-        public static async Task<List<NewsItem>> GetMostRecentFeedItems(int storiesPerFeed)
+        public static async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
         {
             var items = new List<NewsItem>();
 
@@ -85,8 +85,9 @@ namespace News_Emailer.Services
                     currentFeedName = item.FeedName;
                 }
                 
-                var itemSection = "<div><div><h2>{0}</h2></div><p>{1}</p><div>({2})</div></div>";
-                emailBuilder.HtmlBody += string.Format(itemSection, new[] {item.Headline, item.Summary, item.Url.ToString()});
+                emailBuilder.HtmlBody += string.Format(
+                    "<div><div><h2>{0}</h2></div><p>{1}</p><div>({2})</div></div>",
+                    new[] {item.Headline, item.Summary, item.Url.ToString()});
             }
             return emailBuilder.ToMessageBody();
         }

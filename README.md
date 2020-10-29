@@ -6,4 +6,5 @@ The Goal: A backend application that scrapes RSS Feeds for headlines and emails 
 <h4>Completed Tasks:</h4>
 <ol>
 <li>Make API Endpoint for accessing RSS Feed data</li>
+<li>Email most recent stories from multiple feeds through API</li>
 </ol>

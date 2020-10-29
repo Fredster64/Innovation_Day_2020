@@ -14,16 +14,16 @@ namespace News_Emailer.Controllers
     {
         private const int DefaultStoriesPerFeed = 3;
 
-        [HttpGet("stories/most-recent")]
-        public Task<List<NewsItem>> GetMostRecentFeedItems()
+        [HttpGet("email/most-recent")]
+        public Task<List<NewsItem>> EmailMostRecentFeedItems()
         {
-            return SlagheapService.GetMostRecentFeedItems(DefaultStoriesPerFeed);
+            return SlagheapService.EmailMostRecentFeedItems(DefaultStoriesPerFeed);
         }
 
-        [HttpGet("stories/most-recent/{storiesPerFeed}")]
-        public Task<List<NewsItem>> GetMostRecentFeedItems(int storiesPerFeed)
+        [HttpGet("email/most-recent/{storiesPerFeed}")]
+        public Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
         {
-            return SlagheapService.GetMostRecentFeedItems(storiesPerFeed);
+            return SlagheapService.EmailMostRecentFeedItems(storiesPerFeed);
         }
     }
 }
