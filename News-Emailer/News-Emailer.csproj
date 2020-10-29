@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="LumenWorksCsvReader" Version="4.0.0" />
       <PackageReference Include="MailKit" Version="2.9.0" />
       <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0-rc.2.20475.5" />
     </ItemGroup>
