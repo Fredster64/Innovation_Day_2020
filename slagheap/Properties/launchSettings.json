@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": false,
-      "launchUrl": "rssfeed",
+      "launchUrl": "slagheap",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "News_Emailer": {
       "commandName": "Project",
       "launchBrowser": false,
-      "launchUrl": "rssfeed",
+      "launchUrl": "slagheap",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
