@@ -1,4 +1,5 @@
-# Innovation Day 2020 Project (Name TBD)
+# Innovation Day 2020 Project - SLAGHEAP
+(Scheduled Local and Global Headlines Emailer - And Puzzles)
 
 The Goal: A backend application that scrapes RSS Feeds for headlines and emails me regular (daily?) news updates.
 
