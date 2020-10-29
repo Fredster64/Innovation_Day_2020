@@ -2,9 +2,9 @@
 using System.Data;
 using System.IO;
 using LumenWorks.Framework.IO.Csv;
-using News_Emailer.Models;
+using slagheap.Models;
 
-namespace News_Emailer.Services
+namespace slagheap.Services
 {
     public class DataService
     {

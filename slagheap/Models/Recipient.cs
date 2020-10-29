@@ -1,4 +1,4 @@
-﻿namespace News_Emailer.Models
+﻿namespace slagheap.Models
 {
     public class Recipient
     {

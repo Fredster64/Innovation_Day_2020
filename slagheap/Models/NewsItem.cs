@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel.Syndication;
 
-namespace News_Emailer.Models
+namespace slagheap.Models
 {
     public class NewsItem
     {
