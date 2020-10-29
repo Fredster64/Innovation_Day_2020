@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using News_Emailer.Models;
-using News_Emailer.Services;
+using slagheap.Models;
+using slagheap.Services;
 
-namespace News_Emailer.Controllers
+namespace slagheap.Controllers
 {
     [ApiController]
     [Route("[controller]")]

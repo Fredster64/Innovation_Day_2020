@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "News-Emailer", "News-Emailer\News-Emailer.csproj", "{91E5ACD2-366E-4D96-A86B-CAA08AF59DD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slagheap", "slagheap\slagheap.csproj", "{91E5ACD2-366E-4D96-A86B-CAA08AF59DD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using MailKit.Security;
 using MimeKit;
-using News_Emailer.Models;
+using slagheap.Models;
 
-namespace News_Emailer.Services
+namespace slagheap.Services
 {
     public class SlagheapService
     {
