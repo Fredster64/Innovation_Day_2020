@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using slagheap.Services;
 
 namespace slagheap
 {
@@ -26,6 +21,9 @@ namespace slagheap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHangfire(x => 
+                x.UseSqlServerStorage("Server=localhost; Database=Slagheap; Integrated Security=True;"));
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +41,12 @@ namespace slagheap
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseHangfireDashboard();
+            
+            RecurringJob.AddOrUpdate(
+                () => SlagheapService.EmailMostRecentFeedItems(5), 
+                "0 9 * * *");
         }
     }
 }

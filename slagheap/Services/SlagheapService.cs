@@ -1,42 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
+using Hangfire;
 using MailKit.Security;
 using MimeKit;
 using slagheap.Models;
 
 namespace slagheap.Services
 {
-    public class SlagheapService
+    public static class SlagheapService
     {
-        private readonly List<string> _feedUrls;
-        private readonly List<Recipient> _recipients;
-
-        public SlagheapService()
+        public static async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
         {
             var dataService = new DataService();
-            _feedUrls = dataService.GetFeedUrls();
-            _recipients = dataService.GetRecipients();
-        }
-        
-        public async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
-        {
+            var feedUrls = dataService.GetFeedUrls();
+            var recipients = dataService.GetRecipients();
+
             var items = new List<NewsItem>();
 
-            foreach (var url in _feedUrls)
+            foreach (var url in feedUrls)
             {
                 var reader = XmlReader.Create(url);
                 var feed = SyndicationFeed.Load(reader);
                 items.AddRange(feed.Items.Select(item => new NewsItem(item, feed)).Take(storiesPerFeed));
             }
 
-            await SendEmailFromNewsItems(items);
+            await SendEmailFromNewsItems(items, recipients);
             return items;
         }
 
-        private async Task SendEmailFromNewsItems(List<NewsItem> newsItems)
+        private static async Task SendEmailFromNewsItems(List<NewsItem> newsItems, List<Recipient> recipients)
         {
             var message = new MimeMessage
             {
@@ -50,7 +47,7 @@ namespace slagheap.Services
             };
             await smtp.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync("slagheap-news@outlook.com", "SLAGHEAPnews");
-            foreach (var recipient in _recipients)
+            foreach (var recipient in recipients)
             {
                 message.To.Add(new MailboxAddress(recipient.Name, recipient.EmailAddress));
                 message.Body = GetEmailBodyFromItems(newsItems, recipient);
