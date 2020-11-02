@@ -18,7 +18,7 @@ namespace slagheap.Services
         {
             var dataService = new DataService();
             var feedUrls = dataService.GetFeedUrls();
-            var recipients = dataService.GetRecipients();
+            var subscribers = dataService.GetSubscribers();
 
             var items = new List<NewsItem>();
 
@@ -29,11 +29,11 @@ namespace slagheap.Services
                 items.AddRange(feed.Items.Select(item => new NewsItem(item, feed)).Take(storiesPerFeed));
             }
 
-            await SendEmailFromNewsItems(items, recipients);
+            await SendEmailFromNewsItems(items, subscribers);
             return items;
         }
 
-        private static async Task SendEmailFromNewsItems(List<NewsItem> newsItems, List<Recipient> recipients)
+        private static async Task SendEmailFromNewsItems(List<NewsItem> newsItems, List<Subscriber> subscribers)
         {
             var message = new MimeMessage
             {
@@ -47,22 +47,22 @@ namespace slagheap.Services
             };
             await smtp.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync("slagheap-news@outlook.com", "SLAGHEAPnews");
-            foreach (var recipient in recipients)
+            foreach (var subscriber in subscribers)
             {
-                message.To.Add(new MailboxAddress(recipient.Name, recipient.EmailAddress));
-                message.Body = GetEmailBodyFromItems(newsItems, recipient);
+                message.To.Add(new MailboxAddress(subscriber.Name, subscriber.EmailAddress));
+                message.Body = GetEmailBodyFromItems(newsItems, subscriber);
                 await smtp.SendAsync(message);
                 message.To.Clear();
             }
             await smtp.DisconnectAsync(true);
         }
 
-        private static MimeEntity GetEmailBodyFromItems(List<NewsItem> newsItems, Recipient recipient)
+        private static MimeEntity GetEmailBodyFromItems(List<NewsItem> newsItems, Subscriber subscriber)
         {
             var emailBuilder = new BodyBuilder();
             emailBuilder.HtmlBody = string.Format(
                 "<p>Hi {0},</p><p>Here are your news updates for today:</p>", 
-                new[] {recipient.Name.Split(' ')[0]});
+                new[] {subscriber.Name.Split(' ')[0]});
 
             var currentFeedName = "";
             foreach (var item in newsItems)

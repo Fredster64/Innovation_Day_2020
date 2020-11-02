@@ -9,15 +9,15 @@ namespace slagheap.Services
     public class DataService
     {
         private const string FeedUrlsFilePath = @"Data\feedUrls.csv";
-        private const string RecipientsFilePath = @"Data\recipients.csv";
+        private const string SubscribersFilePath = @"Data\subscribers.csv";
 
         private readonly CsvReader _feedUrlsCsvReader;
-        private readonly CsvReader _recipientsCsvReader;
+        private readonly CsvReader _subscribersCsvReader;
 
         public DataService()
         {
             _feedUrlsCsvReader = new CsvReader(new StreamReader(File.OpenRead(FeedUrlsFilePath)));
-            _recipientsCsvReader = new CsvReader(new StreamReader(File.OpenRead(RecipientsFilePath)));
+            _subscribersCsvReader = new CsvReader(new StreamReader(File.OpenRead(SubscribersFilePath)));
         }
 
         public List<string> GetFeedUrls()
@@ -34,15 +34,15 @@ namespace slagheap.Services
             return feedUrls;
         }
         
-        public List<Recipient> GetRecipients()
+        public List<Subscriber> GetSubscribers()
         {
-            var recipients = new List<Recipient>();
+            var recipients = new List<Subscriber>();
             var csvTable = new DataTable();
-            csvTable.Load(_recipientsCsvReader);
+            csvTable.Load(_subscribersCsvReader);
 
             for(int i=0; i<csvTable.Rows.Count; i++)
             {
-                recipients.Add(new Recipient(
+                recipients.Add(new Subscriber(
                     csvTable.Rows[i][0].ToString(), 
                     csvTable.Rows[i][1].ToString()));
             }
