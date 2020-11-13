@@ -33,7 +33,7 @@ namespace slagheap.Services
 
             return feedUrls;
         }
-        
+
         public List<Subscriber> GetSubscribers()
         {
             var recipients = new List<Subscriber>();
@@ -43,7 +43,7 @@ namespace slagheap.Services
             for(int i=0; i<csvTable.Rows.Count; i++)
             {
                 recipients.Add(new Subscriber(
-                    csvTable.Rows[i][0].ToString(), 
+                    csvTable.Rows[i][0].ToString(),
                     csvTable.Rows[i][1].ToString()));
             }
 

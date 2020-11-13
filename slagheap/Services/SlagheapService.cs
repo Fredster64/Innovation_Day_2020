@@ -61,7 +61,7 @@ namespace slagheap.Services
         {
             var emailBuilder = new BodyBuilder();
             emailBuilder.HtmlBody = string.Format(
-                "<p>Hi {0},</p><p>Here are your news updates for today:</p>", 
+                "<p>Hi {0},</p><p>Here are your news updates for today:</p>",
                 new[] {subscriber.Name.Split(' ')[0]});
 
             var currentFeedName = "";
@@ -76,7 +76,7 @@ namespace slagheap.Services
                     emailBuilder.HtmlBody += string.Format("<h2><u>{0}</u></h2>", new[] {item.FeedName});
                     currentFeedName = item.FeedName;
                 }
-                
+
                 emailBuilder.HtmlBody += string.Format(
                     "<div><div><h2>{0}</h2></div><p>{1}</p><div>({2})</div></div>",
                     new[] {item.Headline, item.Summary, item.Url.ToString()});
