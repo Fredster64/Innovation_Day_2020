@@ -26,7 +26,10 @@ namespace slagheap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.DocumentFilter<SlagheapDocumentFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
