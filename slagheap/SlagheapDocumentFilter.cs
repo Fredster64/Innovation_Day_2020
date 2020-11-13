@@ -10,7 +10,7 @@ namespace slagheap
         {
             swaggerDoc.Servers = new List<OpenApiServer>()
             {
-                new OpenApiServer() {Url = "https://demonewsapp-api.azurewebsites.net"}
+                new OpenApiServer() {Url = "https://slagheapappservice.azurewebsites.net"}
             };
         }
     }

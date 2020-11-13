@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://demonewsapp-api.azurewebsites.net/;http://localhost:34303",
-      "sslPort": 44351
+        "applicationUrl": "http://localhost:34303",
+        "sslPort": 44351
     }
   },
   "profiles": {
@@ -18,13 +18,13 @@
       }
     },
     "News_Emailer": {
-      "commandName": "Project",
-      "launchBrowser": false,
-      "launchUrl": "slagheap",
-      "applicationUrl": "https://demonewsapp-api.azurewebsites.net/;http://localhost:34303",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "Project",
+        "launchBrowser": false,
+        "launchUrl": "slagheap",
+        "applicationUrl": "http://localhost:5000;http://localhost:5001",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
     }
   }
 }
