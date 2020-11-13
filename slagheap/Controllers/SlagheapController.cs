@@ -11,17 +11,23 @@ namespace slagheap.Controllers
     public class SlagheapController : ControllerBase
     {
         private const int DefaultStoriesPerFeed = 3;
+        private readonly SlagheapService _slagheapService;
+
+        public SlagheapController()
+        {
+            _slagheapService = new SlagheapService();
+        }
 
         [HttpGet("email/most-recent")]
         public Task<List<NewsItem>> EmailMostRecentFeedItems()
         {
-            return SlagheapService.EmailMostRecentFeedItems(DefaultStoriesPerFeed);
+            return _slagheapService.EmailMostRecentFeedItems(DefaultStoriesPerFeed);
         }
 
         [HttpGet("email/most-recent/{storiesPerFeed}")]
         public Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
         {
-            return SlagheapService.EmailMostRecentFeedItems(storiesPerFeed);
+            return _slagheapService.EmailMostRecentFeedItems(storiesPerFeed);
         }
     }
 }
