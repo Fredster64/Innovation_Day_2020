@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>News_Emailer</RootNamespace>
+        <UserSecretsId>dae9ea7d-f92b-4bd4-a36d-a0d3a137a519</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

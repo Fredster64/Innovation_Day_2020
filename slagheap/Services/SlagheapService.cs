@@ -11,21 +11,23 @@ namespace slagheap.Services
 {
     public class SlagheapService
     {
-        private readonly List<string> _feedUrls;
-        private readonly List<Subscriber> _subscribers;
+        private static string[] FeedUrls = new string[] { 
+            "http://feeds.bbci.co.uk/news/england/london/rss.xml",
+            "https://www.bristolpost.co.uk/news/bristol-news/?service=rss",
+            "https://www.theguardian.com/crosswords/series/quiptic/rss",
+            "https://www.theguardian.com/artanddesign/rss" 
+        };
 
-        public SlagheapService()
+        private static Subscriber[] Subscribers = new Subscriber[]
         {
-            var dataService = new DataService();
-            _feedUrls = dataService.GetFeedUrls();
-            _subscribers = dataService.GetSubscribers();
-        }
+            new Subscriber("Freddie Payne", "freddie.payne@ghyston.com")
+        };
 
         public async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
         {
             var items = new List<NewsItem>();
 
-            foreach (var url in _feedUrls)
+            foreach (var url in FeedUrls)
             {
                 var reader = XmlReader.Create(url);
                 var feed = SyndicationFeed.Load(reader);
@@ -50,7 +52,7 @@ namespace slagheap.Services
             };
             await smtp.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync("slagheap-news@outlook.com", "SLAGHEAPnews");
-            foreach (var subscriber in _subscribers)
+            foreach (var subscriber in Subscribers)
             {
                 message.To.Add(new MailboxAddress(subscriber.Name, subscriber.EmailAddress));
                 message.Body = GetEmailBodyFromItems(newsItems, subscriber);
