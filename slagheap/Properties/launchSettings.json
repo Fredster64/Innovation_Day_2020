@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:34303",
+      "applicationUrl": "http://localhost:34303;https://demonewsapp-api.azurewebsites.net",
       "sslPort": 44351
     }
   },

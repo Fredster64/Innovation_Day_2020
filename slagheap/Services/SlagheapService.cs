@@ -1,39 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
-using Hangfire;
 using MailKit.Security;
 using MimeKit;
 using slagheap.Models;
 
 namespace slagheap.Services
 {
-    public static class SlagheapService
+    public class SlagheapService
     {
-        public static async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
+        private readonly List<string> _feedUrls;
+        private readonly List<Subscriber> _subscribers;
+
+        public SlagheapService()
         {
             var dataService = new DataService();
-            var feedUrls = dataService.GetFeedUrls();
-            var subscribers = dataService.GetSubscribers();
+            _feedUrls = dataService.GetFeedUrls();
+            _subscribers = dataService.GetSubscribers();
+        }
 
+        public async Task<List<NewsItem>> EmailMostRecentFeedItems(int storiesPerFeed)
+        {
             var items = new List<NewsItem>();
 
-            foreach (var url in feedUrls)
+            foreach (var url in _feedUrls)
             {
                 var reader = XmlReader.Create(url);
                 var feed = SyndicationFeed.Load(reader);
                 items.AddRange(feed.Items.Select(item => new NewsItem(item, feed)).Take(storiesPerFeed));
             }
 
-            await SendEmailFromNewsItems(items, subscribers);
+            await SendEmailFromNewsItems(items);
             return items;
         }
 
-        private static async Task SendEmailFromNewsItems(List<NewsItem> newsItems, List<Subscriber> subscribers)
+        private async Task SendEmailFromNewsItems(List<NewsItem> newsItems)
         {
             var message = new MimeMessage
             {
@@ -47,7 +50,7 @@ namespace slagheap.Services
             };
             await smtp.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync("slagheap-news@outlook.com", "SLAGHEAPnews");
-            foreach (var subscriber in subscribers)
+            foreach (var subscriber in _subscribers)
             {
                 message.To.Add(new MailboxAddress(subscriber.Name, subscriber.EmailAddress));
                 message.Body = GetEmailBodyFromItems(newsItems, subscriber);
@@ -61,7 +64,7 @@ namespace slagheap.Services
         {
             var emailBuilder = new BodyBuilder();
             emailBuilder.HtmlBody = string.Format(
-                "<p>Hi {0},</p><p>Here are your news updates for today:</p>", 
+                "<p>Hi {0},</p><p>Here are your news updates for today:</p>",
                 new[] {subscriber.Name.Split(' ')[0]});
 
             var currentFeedName = "";
@@ -76,7 +79,7 @@ namespace slagheap.Services
                     emailBuilder.HtmlBody += string.Format("<h2><u>{0}</u></h2>", new[] {item.FeedName});
                     currentFeedName = item.FeedName;
                 }
-                
+
                 emailBuilder.HtmlBody += string.Format(
                     "<div><div><h2>{0}</h2></div><p>{1}</p><div>({2})</div></div>",
                     new[] {item.Headline, item.Summary, item.Url.ToString()});
